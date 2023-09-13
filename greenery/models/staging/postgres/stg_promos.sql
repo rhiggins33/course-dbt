@@ -1,12 +1,13 @@
-{{
-  config(
-    materialized='table'
-  )
-}}
+WITH source AS (
+  SELECT * FROM {{ source('postgres', 'promos') }}
+  ),
 
-SELECT 
-  promo_id
-  ,discount
-  ,status
+promos AS (
+  SELECT 
+    promo_id
+    ,discount
+    ,status
+  FROM source
+)
 
-FROM {{ source('postgres', 'promos') }}
+SELECT * FROM promos
