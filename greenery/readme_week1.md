@@ -16,43 +16,27 @@ On average, how long does an order take from being placed to being delivered? ~3
         AVG(DATEDIFF(day, created_at, delivered_at)) as avg_delivery_time
     FROM dev_db.dbt_rodhiggiucscedu.stg_orders
 
-How many users have only made one purchase? 25 users
+--How many users have only made one purchase? 25 users, Two purchases? 28 users, Three+ purchases? 71 users
+
+WITH purchases AS(
+    SELECT count(user_id) as num_purchases
+    FROM stg_orders
+    GROUP BY user_id
+    ) 
     
+SELECT
+    COUNT_IF(num_purchases = 1) AS "1 purchase only",
+    COUNT_IF(num_purchases = 2) AS "2 purchases only",
+    COUNT_IF(num_purchases >= 3) AS "3+ purchases"
+FROM purchases
+
+-- On average, how many unique sessions do we have per hour? ~16.3 sessions per hour
+WITH sessions AS(
     SELECT 
-        COUNT(*)
+        DATE_TRUNC('hour', created_at) AS session_hour
+        ,COUNT(DISTINCT session_id) AS session_count
     FROM 
-        (SELECT user_id
-        FROM dev_db.dbt_rodhiggiucscedu.stg_orders
-        GROUP BY user_id
-        HAVING COUNT(user_id) = 1)
-
->Two purchases? 28 users
-
-    SELECT 
-        COUNT(*)
-    FROM 
-        (SELECT user_id
-        FROM dev_db.dbt_rodhiggiucscedu.stg_orders
-        GROUP BY user_id
-        HAVING COUNT(user_id) = 2)
-
->Three+ purchases? 71 users
-
-    SELECT 
-        COUNT(*)
-    FROM 
-        (SELECT user_id
-        FROM dev_db.dbt_rodhiggiucscedu.stg_orders
-        GROUP BY user_id
-        HAVING COUNT(user_id) > 2)
-
-On average, how many unique sessions do we have per hour? ~16.3 sessions per hour
-
-    SELECT 
-        AVG(session_count) AS avg_sessions_per_hour
-    FROM 
-        (SELECT 
-        DATE_TRUNC('hour', created_at) AS session_hour,
-        COUNT(DISTINCT session_id) AS session_count
-        FROM dev_db.dbt_rodhiggiucscedu.stg_events
-        GROUP BY session_hour)
+        stg_events
+    GROUP BY session_hour
+    )
+SELECT AVG(session_count) AS average_sessions_per_hour FROM sessions
