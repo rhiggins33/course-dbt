@@ -18,22 +18,22 @@ sources:
     tables: # this is where we define table metadata (name, description, load timestamps)
       - name: addresses
         description: >
-          Contains addresses 
+          Contains unique addresses 
       - name: events
         description: >
-          Contains events 
+          Contains website related events 
       - name: orders
         description: >
-          Contains orders
+          Contains unique orders
       - name: order_items
         description: >
-          Contains order items
+          Contains unique order items
       - name: products
         description: >
-          Contains product info
+          Contains unique product info
       - name: promos
         description: >
-          Contains promo info
+          Contains unique promo info
       - name: users
         description: >
-          Contains user data
+          Contains unique user data
