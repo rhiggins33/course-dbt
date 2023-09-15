@@ -35,5 +35,6 @@ models:
     staging:
       postgres:
         materialized: table
-    
+    marts: 
+      
     
