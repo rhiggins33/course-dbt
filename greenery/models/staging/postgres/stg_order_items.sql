@@ -1,6 +1,6 @@
 WITH source AS (
-  SELECT * FROM {{ source('postgres', 'order_items') }}
-  ),
+    SELECT * FROM {{ source('postgres', 'order_items') }}
+),
 
 order_items AS (
   SELECT 
