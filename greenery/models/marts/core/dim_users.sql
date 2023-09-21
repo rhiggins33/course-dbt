@@ -1,6 +1,19 @@
+WITH users AS (
+    SELECT * FROM {{ ref('stg_users') }}
+),
+
+addresses AS (
+    SELECT * FROM {{ ref('stg_addresses') }}
+),
+
+address_user_count AS (
+    SELECT * FROM {{ ref('int_address_user_count') }}
+)
+
 SELECT
     u.user_id
-    ,concat(u.first_name,' ',u.last_name) AS full_name
+    ,u.first_name
+    ,u.last_name
     ,u.email
     ,u.phone_number
     ,u.created_at
@@ -9,7 +22,9 @@ SELECT
     ,a.zipcode
     ,a.state
     ,a.country
-FROM {{ ref('stg_users') }} u
-LEFT JOIN {{ ref('stg_addresses') }} a
+    ,auc.address_user_count
+FROM users u
+LEFT JOIN addresses a
     ON u.address_id = a.address_id
-
+LEFT JOIN address_user_count auc 
+    ON u.address_id = auc.address_id
