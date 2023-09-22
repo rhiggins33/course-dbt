@@ -36,5 +36,5 @@ models:
       postgres:
         materialized: table
     marts: 
-      
+      materialized: table
     
