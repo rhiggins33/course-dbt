@@ -17,8 +17,7 @@ SELECT
     ,p.inventory
     ,p.price*p.inventory AS total_value
     ,u.page_url
-    ,e.add_to_carts
-    ,e.page_views
+    {{ event_types('stg_events','event_type') }}
     ,ROUND(DIV0(add_to_carts, page_views)*100, 1) AS percent_added 
 FROM products p
 LEFT JOIN page_url u
