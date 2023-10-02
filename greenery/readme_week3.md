@@ -58,7 +58,14 @@ Pothos	34.4
 We can make a range of hypotheses from technical issues related to poor website design, or availability and marketability of the individual products.
 
 
-PART 2:
+PART 6:
 
+-- Which products had their inventory change from week 2 to week 3? 
 
+Monstera
+String of pearls
+Philodendron
+Pothos
+Bamboo
+ZZ Plant
 
