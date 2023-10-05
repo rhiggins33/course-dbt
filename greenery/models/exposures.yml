@@ -1,0 +1,14 @@
+version: 2
+
+exposures:  
+  - name: Greenery Product Funnel Dashboard
+    description: >
+      Models that are critical to our product funnel dashboard
+    type: dashboard
+    maturity: high
+    owner:
+      name: Rory
+      email: rory@greenery.com
+    depends_on:
+      - ref('int_user_session_agg')
+      - ref('inventory_snap')
